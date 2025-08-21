@@ -1,0 +1,5 @@
+FLASK_ENV=development
+FLASK_RUN_PORT=5001
+FLASK_RUN_HOST=localhost
+FLASK_APP=app:create_app
+FLASK_ADMIN_SWATCH=cerulean

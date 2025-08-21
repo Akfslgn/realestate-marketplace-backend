@@ -1,0 +1,33 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+psycopg2-binary = "*"
+flask-migrate = "*"
+flask-cors = "*"
+flask-admin = "*"
+flask-swagger-ui = "*"
+flask-apispec = "*"
+python-dotenv = "*"
+faker = "*"
+marshmallow = "<4.0.0"
+wtforms = "<3.2"
+
+[dev-packages]
+pytest = "*"
+coverage = "*"
+
+[scripts]
+start = "flask run --debug --reload"
+serve = "flask run --port 3000"
+setup = "flask db init"
+migrate = "flask db migrate"
+upgrade = "flask db upgrade"
+downgrade = "flask db downgrade"
+resetdb = "python reset_db.py"
+test = "pytest -v"
+seed = "python app/seed_db.py"
