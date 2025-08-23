@@ -8,6 +8,12 @@ load_dotenv(".env")
 class BaseConfig:
     SQLALCHEMY_DATABASE_URI = getenv("DATABASE_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_pre_ping": True,
+        "pool_recycle": 300,
+        "pool_timeout": 20,
+        "max_overflow": 0
+    }
     APISPEC_SWAGGER_UI_URL = "/docs"
     APISPEC_TITLE = "Kickstart API"
     APISPEC_VERSION = "1.0.0"
