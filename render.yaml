@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: realestate-marketplace-backend
+    runtime: python
+    repo: https://github.com/Akfslgn/realestate-marketplace-backend
+    plan: free
+    envVars:
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: FLASK_ADMIN_SWATCH
+        sync: false
+      - key: FLASK_APP
+        sync: false
+      - key: FLASK_ENV
+        sync: false
+    region: virginia
+    buildCommand: bash pip install pipenv && pipenv install --system --deploy
+    startCommand: gunicorn wsgi:app --workers 3 --timeout 60
+    autoDeployTrigger: "off"
+version: "1"
