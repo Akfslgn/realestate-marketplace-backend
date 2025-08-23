@@ -22,7 +22,7 @@ def create_app(env: str | None = None) -> Flask:
     # Initialize CORS with proper configuration
     cors.init_app(app, 
                   origins=app.config.get("CORS_ORIGINS", ["*"]),
-                  methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                  methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
                   allow_headers=["Content-Type", "Authorization"],
                   supports_credentials=True)
     
@@ -45,7 +45,7 @@ def create_app(env: str | None = None) -> Flask:
         if origin in app.config.get("CORS_ORIGINS", []):
             response.headers.add('Access-Control-Allow-Origin', origin)
             response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-            response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+            response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH')
             response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response
 
