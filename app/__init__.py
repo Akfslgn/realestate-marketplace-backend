@@ -1,5 +1,5 @@
 import cloudinary
-from flask import Flask
+from flask import Flask, request
 
 from app.admin import init_admin
 from app.config import get_config
@@ -18,7 +18,14 @@ def create_app(env: str | None = None) -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db)
-    cors.init_app(app, origins=app.config.get("CORS_ORIGINS", ["*"]))
+    
+    # Initialize CORS with proper configuration
+    cors.init_app(app, 
+                  origins=app.config.get("CORS_ORIGINS", ["*"]),
+                  methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+                  allow_headers=["Content-Type", "Authorization"],
+                  supports_credentials=True)
+    
     init_admin(app)
     jwt.init_app(app)
 
@@ -30,6 +37,17 @@ def create_app(env: str | None = None) -> Flask:
 
     # Register error handlers
     register_error_handlers(app)
+
+    # Manual CORS headers as backup
+    @app.after_request
+    def after_request(response):
+        origin = request.headers.get('Origin')
+        if origin in app.config.get("CORS_ORIGINS", []):
+            response.headers.add('Access-Control-Allow-Origin', origin)
+            response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+            response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+            response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response
 
     # register blueprints
     app.register_blueprint(auth_bp, url_prefix="/api/v1/auth")
