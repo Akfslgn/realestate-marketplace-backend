@@ -60,5 +60,15 @@ def create_app(env: str | None = None) -> Flask:
     @app.get("/ping")
     def ping():
         return {"status": "ok"}
+    
+    # database health check
+    @app.get("/health")
+    def health():
+        try:
+            # Simple database query to check connection
+            db.session.execute(db.text("SELECT 1"))
+            return {"status": "ok", "database": "connected"}
+        except Exception as e:
+            return {"status": "error", "database": "disconnected", "error": str(e)}, 500
 
     return app

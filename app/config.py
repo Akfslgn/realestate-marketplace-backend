@@ -12,7 +12,11 @@ class BaseConfig:
         "pool_pre_ping": True,
         "pool_recycle": 300,
         "pool_timeout": 20,
-        "max_overflow": 0
+        "max_overflow": 0,
+        "connect_args": {
+            "sslmode": "require",
+            "connect_timeout": 10,
+        }
     }
     APISPEC_SWAGGER_UI_URL = "/docs"
     APISPEC_TITLE = "Kickstart API"

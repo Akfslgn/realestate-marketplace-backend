@@ -50,24 +50,29 @@ def register():
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    if not data or "email" not in data or "password" not in data:
-        return jsonify({"error": "Missing email or password fields"}), 400
+        if not data or "email" not in data or "password" not in data:
+            return jsonify({"error": "Missing email or password fields"}), 400
 
-    user = UserService.get_user_by_email(data.get("email"))
+        user = UserService.get_user_by_email(data.get("email"))
 
-    if not user:
-        return jsonify({"error": f"No user with email {data.get("email")} found"}), 400
+        if not user:
+            return jsonify({"error": f"No user with email {data.get("email")} found"}), 400
 
-    if not data.get("password"):
-        return jsonify({"error": "Password is required"}), 400
+        if not data.get("password"):
+            return jsonify({"error": "Password is required"}), 400
 
-    if not user.check_password(data.get("password")):
-        return jsonify({"error": "The password provided does not match the original one."}), 400
+        if not user.check_password(data.get("password")):
+            return jsonify({"error": "The password provided does not match the original one."}), 400
 
-    access_token = create_access_token(
-        identity=str(user.id), additional_claims={"email": data.get("email")}
-    )
+        access_token = create_access_token(
+            identity=str(user.id), additional_claims={"email": data.get("email")}
+        )
 
-    return jsonify({"user": user.serialize(), "token": access_token}), 200
+        return jsonify({"user": user.serialize(), "token": access_token}), 200
+    
+    except Exception as e:
+        print(f"Login error: {str(e)}")
+        return jsonify({"error": "Database connection issue. Please try again later."}), 500
