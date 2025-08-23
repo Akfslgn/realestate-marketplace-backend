@@ -17,9 +17,8 @@ def create_listing():
         return jsonify({"error": "400 Bad Request", "message": "Data as JSON not provided"}), 400
 
     # Add validation for property_type
-    # Update with your actual enum values
-    valid_property_types = ["house", "apartment",
-                            "condo", "townhouse", "commercial"]
+    # Must match the enum values in the database model
+    valid_property_types = ["house", "apartment", "condo", "land"]
     if "property_type" in data and data.get("property_type").lower() not in valid_property_types:
         return jsonify({
             "error": "400 Bad Request",
