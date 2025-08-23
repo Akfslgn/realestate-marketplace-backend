@@ -18,14 +18,14 @@ def create_app(env: str | None = None) -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db)
-    
+
     # Initialize CORS with proper configuration
-    cors.init_app(app, 
+    cors.init_app(app,
                   origins=app.config.get("CORS_ORIGINS", ["*"]),
                   methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
                   allow_headers=["Content-Type", "Authorization"],
                   supports_credentials=True)
-    
+
     init_admin(app)
     jwt.init_app(app)
 
@@ -44,8 +44,10 @@ def create_app(env: str | None = None) -> Flask:
         origin = request.headers.get('Origin')
         if origin in app.config.get("CORS_ORIGINS", []):
             response.headers.add('Access-Control-Allow-Origin', origin)
-            response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-            response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH')
+            response.headers.add(
+                'Access-Control-Allow-Headers', 'Content-Type,Authorization')
+            response.headers.add('Access-Control-Allow-Methods',
+                                 'GET,PUT,POST,DELETE,OPTIONS,PATCH')
             response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response
 
@@ -60,7 +62,7 @@ def create_app(env: str | None = None) -> Flask:
     @app.get("/ping")
     def ping():
         return {"status": "ok"}
-    
+
     # database health check
     @app.get("/health")
     def health():

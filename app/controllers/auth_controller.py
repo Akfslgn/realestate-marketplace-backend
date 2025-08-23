@@ -72,7 +72,7 @@ def login():
         )
 
         return jsonify({"user": user.serialize(), "token": access_token}), 200
-    
+
     except Exception as e:
         print(f"Login error: {str(e)}")
         return jsonify({"error": "Database connection issue. Please try again later."}), 500

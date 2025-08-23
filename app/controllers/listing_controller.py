@@ -12,6 +12,7 @@ listing_bp = Blueprint("listings", __name__)
 def create_listing():
     # capture the data from request
     data = request.get_json()
+    print(f"DEBUG: Received listing data: {data}")  # Debug log
 
     if not data:
         return jsonify({"error": "400 Bad Request", "message": "Data as JSON not provided"}), 400
@@ -20,9 +21,10 @@ def create_listing():
     # Must match the enum values in the database model
     valid_property_types = ["house", "apartment", "condo", "land"]
     if "property_type" in data and data.get("property_type").lower() not in valid_property_types:
+        print(f"DEBUG: Invalid property_type received: '{data.get('property_type')}'")  # Debug log
         return jsonify({
             "error": "400 Bad Request",
-            "message": f"Invalid property_type. Must be one of: {', '.join(valid_property_types)}"
+            "message": f"Invalid property_type '{data.get('property_type')}'. Must be one of: {', '.join(valid_property_types)}"
         }), 400
 
     # Convert property_type to lowercase to match enum
