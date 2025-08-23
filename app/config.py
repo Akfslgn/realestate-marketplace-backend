@@ -16,6 +16,9 @@ class BaseConfig:
     CLOUDINARY_API_KEY = getenv("CLOUDINARY_API_KEY")
     CLOUDINARY_API_SECRET = getenv("CLOUDINARY_API_SECRET")
     OPENAI_API_KEY = getenv("OPENAI_API_KEY")
+    
+    # CORS Configuration
+    CORS_ORIGINS = getenv("CORS_ORIGINS", "*").split(",") if getenv("CORS_ORIGINS") else ["*"]
 
 
 class DevelopmentConfig(BaseConfig):

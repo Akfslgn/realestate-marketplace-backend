@@ -18,7 +18,7 @@ def create_app(env: str | None = None) -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db)
-    cors.init_app(app)
+    cors.init_app(app, origins=app.config.get("CORS_ORIGINS", ["*"]))
     init_admin(app)
     jwt.init_app(app)
 
