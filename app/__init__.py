@@ -73,4 +73,30 @@ def create_app(env: str | None = None) -> Flask:
         except Exception as e:
             return {"status": "error", "database": "disconnected", "error": str(e)}, 500
 
+    # seed endpoint for initial data
+    @app.get("/seed")
+    def seed():
+        try:
+            from app.models import User, Listing
+            
+            # Check if data already exists
+            existing_users = db.session.query(User).count()
+            if existing_users > 0:
+                return {"message": "Database already seeded", "users": existing_users}
+            
+            # Create sample users
+            sample_users = [
+                User(email="admin@homehaven.com", username="admin"),
+                User(email="user1@homehaven.com", username="user1"),
+                User(email="user2@homehaven.com", username="user2")
+            ]
+            
+            for user in sample_users:
+                db.session.add(user)
+            
+            db.session.commit()
+            return {"message": "Database seeded successfully", "users_created": len(sample_users)}
+        except Exception as e:
+            return {"error": str(e)}, 500
+
     return app
