@@ -27,7 +27,7 @@ services:
       - key: OPENAI_API_KEY
         sync: false
     region: virginia
-    buildCommand: pip install pipenv && pipenv install --system --deploy && python -c "from app import create_app; from app.extensions import db; app = create_app(); app.app_context().push(); db.create_all(); print('Database tables created successfully')"
+    buildCommand: pip install pipenv && pipenv install --system --deploy && flask db upgrade || (flask db stamp head && flask db upgrade)
     startCommand: gunicorn wsgi:app --workers 3 --timeout 60
     autoDeployTrigger: "on"
 version: "1"
