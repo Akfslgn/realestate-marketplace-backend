@@ -79,6 +79,13 @@ def create_app(env: str | None = None) -> Flask:
         try:
             from app.models import User, Listing
             
+            # First try to create all tables
+            try:
+                db.create_all()
+                print("Database tables created successfully")
+            except Exception as table_error:
+                print(f"Table creation warning: {table_error}")
+            
             # Check if data already exists
             existing_users = db.session.query(User).count()
             if existing_users > 0:
