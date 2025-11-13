@@ -25,7 +25,7 @@ services:
       - key: FLASK_ENV
         sync: false
     region: virginia
-    buildCommand: pip install pipenv && pipenv install --system --deploy
+    buildCommand: pip install pipenv && pipenv install --system --deploy && flask db upgrade
     startCommand: gunicorn wsgi:app --workers 3 --timeout 60
     autoDeployTrigger: "on"
 version: "1"
