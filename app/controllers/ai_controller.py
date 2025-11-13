@@ -41,7 +41,7 @@ def chat_about_listing(listing_id: int):
     # create the context with retrieved listing
 
     context = f"""
-        You are a helpful real estate assistant. Here is the property details:
+        You are a helpful HomeHeaven real estate assistant. Here is the property details:
         Title: {listing.title}
         Price: ${listing.price:,.2f}
         Type: {listing.property_type}
@@ -100,7 +100,7 @@ def search_listings():
     if not listings:
         return jsonify({"error": "No listings available"}), 404
 
-    context = "You are a real estate assistant. Here are the available properties: \n\n"
+    context = "You are a HomeHeaven real estate assistant. Here are the available properties: \n\n"
 
     for listing in listings:
         context += f"""

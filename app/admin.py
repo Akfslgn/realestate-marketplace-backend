@@ -4,7 +4,7 @@ from flask_admin.contrib.sqla import ModelView
 from app.extensions import db
 from app.models import Listing, ListingImage, Profile, User, WishlistItem
 
-admin_panel = Admin(name="Admin Panel")
+admin_panel = Admin(name="HomeHeaven Admin Panel")
 
 
 class UserView(ModelView):

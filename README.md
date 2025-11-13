@@ -1,4 +1,4 @@
-# Backend Development Template
+# HomeHeaven Backend
 ### Tech Stack
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
@@ -9,7 +9,7 @@
 [![Pipenv](https://img.shields.io/badge/Pipenv-2C8EBB?style=for-the-badge&logo=pipenv&logoColor=white)](https://pipenv.pypa.io/)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
 
-This is a **template for Flask-based backend applications**. It provides a fast and efficient starting point for building modern RESTful APIs with a well-structured architecture, database integration, and administrative interface.
+This is the **HomeHeaven real estate platform backend**. A Flask-based RESTful API with modern architecture, database integration, and administrative interface for managing real estate listings and user interactions.
 
 ## Features
 - 🚀 **Flask-powered**: Fast and lightweight framework for API development.

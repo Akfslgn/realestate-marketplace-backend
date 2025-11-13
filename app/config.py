@@ -19,7 +19,7 @@ class BaseConfig:
         }
     }
     APISPEC_SWAGGER_UI_URL = "/docs"
-    APISPEC_TITLE = "Kickstart API"
+    APISPEC_TITLE = "HomeHeaven API"
     APISPEC_VERSION = "1.0.0"
     SECRET_KEY = getenv("SECRET_KEY")
     CLOUDINARY_CLOUD_NAME = getenv("CLOUDINARY_CLOUD_NAME")
