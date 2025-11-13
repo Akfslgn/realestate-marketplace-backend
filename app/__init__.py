@@ -92,10 +92,11 @@ def create_app(env: str | None = None) -> Flask:
                 return {"message": "Database already seeded", "users": existing_users}
             
             # Create sample users
+            from werkzeug.security import generate_password_hash
             sample_users = [
-                User(email="admin@homehaven.com", username="admin"),
-                User(email="user1@homehaven.com", username="user1"),
-                User(email="user2@homehaven.com", username="user2")
+                User(email="admin@homehaven.com", username="admin", password=generate_password_hash("admin123")),
+                User(email="user1@homehaven.com", username="user1", password=generate_password_hash("user123")),
+                User(email="user2@homehaven.com", username="user2", password=generate_password_hash("user123"))
             ]
             
             for user in sample_users:
