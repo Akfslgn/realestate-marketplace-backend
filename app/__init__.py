@@ -59,12 +59,12 @@ def create_app(env: str | None = None) -> Flask:
     app.register_blueprint(ai_bp, url_prefix="/api/v1")
 
     # health check
-    @app.get("/ping")
+    @app.route("/ping", methods=["GET"])
     def ping():
         return {"status": "ok"}
 
     # database health check
-    @app.get("/health")
+    @app.route("/health", methods=["GET"])
     def health():
         try:
             # Simple database query to check connection
@@ -74,7 +74,7 @@ def create_app(env: str | None = None) -> Flask:
             return {"status": "error", "database": "disconnected", "error": str(e)}, 500
 
     # seed endpoint for initial data
-    @app.get("/seed")
+    @app.route("/seed", methods=["GET"])
     def seed():
         try:
             from app.models import User, Listing
