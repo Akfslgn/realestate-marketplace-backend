@@ -121,16 +121,33 @@ def update_listing(listing_id: int):
         )
 
     user_id_jwt = int(get_jwt_identity())
+    
+    # Get the existing listing to check ownership
+    existing_listing = ListingService.get_listings_by_id(listing_id)
+    if not existing_listing:
+        return jsonify({"error": "Listing not found"}), 404
 
-    if not user_id_jwt == data.get("owner_id"):
+    # Check if current user owns this listing
+    if not user_id_jwt == existing_listing.owner_id:
         return jsonify({"error": "You are not authorized to access this account."})
+
+    # Add validation for property_type if it's being updated
+    if "property_type" in data:
+        valid_property_types = ["house", "apartment", "condo", "land"]
+        if data.get("property_type").lower() not in valid_property_types:
+            return jsonify({
+                "error": "400 Bad Request",
+                "message": f"Invalid property_type '{data.get('property_type')}'. Must be one of: {', '.join(valid_property_types)}"
+            }), 400
+        # Convert to lowercase to match enum
+        data["property_type"] = data["property_type"].lower()
 
     try:
         listing = ListingService.update_listing_by_id(
             listing_id=listing_id, **data)
         return (
             jsonify(
-                {"message": "Successfully created a new listing",
+                {"message": "Successfully updated the listing",
                     "listing": listing.serialize()}
             ),
             200,
